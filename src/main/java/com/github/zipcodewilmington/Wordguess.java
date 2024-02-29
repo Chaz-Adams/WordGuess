@@ -1,5 +1,8 @@
 package com.github.zipcodewilmington;
-//Edited by Chaz Adams
+
+/**
+ * Chaz Adams
+ */
 public class Wordguess {
 
 }
