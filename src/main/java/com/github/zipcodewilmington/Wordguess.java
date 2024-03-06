@@ -13,86 +13,49 @@ public class Wordguess {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args){
-        Wordguess game = new Wordguess();
-        game.runGame();
+
+
     }
-
-    public Wordguess() {};
-
-    public String getRandomWord(int randomNumber){
-
-        String[] wordArray = {"Chaz","zipcode","Java","Random","example",
-                "wilmington","Guess","spelling","Network","Smile"};
-
-        return wordArray[randomNumber];
-    }
-
-    public void runGame() {
-
-        Random r = new Random();
-        int random_int = r.nextInt(10) + 1;
-        String magicWord = getRandomWord(random_int);
-        int numOfTries = 0;
-        int allowedTries = magicWord.length();
-        boolean isSolved = false;
-
+    //    announce_game() prints a welcome
+    public void announceGame(){
         System.out.println("Let's Play Wordguess version 1.0");
-        char[] solution = magicWord.toCharArray();
-        char[] guesses = new char[magicWord.length()];
+    }
 
-        for (int i = 0; i < magicWord.length(); i++) {
-            System.out.print("- ");
-        }
+    //    game_over() prints "game over"
+    public void gameOver(){
+        System.out.println("Game Over!");
+    }
 
+    //    initialize_game_state() sets up char[] for secret word and guesses
+    public void initializeGameState(){}
 
+    //    get_next_guess() returns a char from player input
+    public char getNextGuess(){
 
-        while (numOfTries < allowedTries && isSolved == false) {
-            System.out.println("Current Guesses:");
-
-            String guess = scanner.next();
-            if (guess == "-") {
-                System.out.println("\n\n\t\tExiting the game..");
-                System.exit(0);
-            } else guesses = guess.toCharArray();
-
-
-        }
-
-
-        System.out.println("Magic Word is: "+magicWord);
-        System.out.println("Solution Array: "+solution.toString());
-        System.out.println("Guesses: "+ guesses.toString());
-
+    }
+    //    is_word_guessed() returns boolean
+    public boolean isWordGuessed(){
 
     }
 
-    public void underScores(String randomWord){
+    //    ask_to_play_again() returns boolean
+    public boolean askToPlayAgain(){
 
     }
 
-    public String newUnderScoreWord(){
-        return null;
+    //    print_current_state() uses printArray to show player where they are at
+
+    //    process() loops thru the word array, looking for the inputed guess, and replaces the "_" with the guesses char if found
+
+    //    player_won() prints happy message
+    public void playerWon(){
+        System.out.println();
     }
 
-    public int isGuessCorrect(char userGuess, String magicWord){
-        int correctUserGuess = 0;
-
-        char[] charArray = magicWord.toCharArray();
-        for(int i = 0; i < magicWord.length(); i++){
-            if(charArray[i] == userGuess){
-                System.out.println("That letter is in the word!");
-                correctUserGuess = i;
-                System.out.println("Found in index: "+correctUserGuess);
-            }else {
-                System.out.println("That letter is NOT in the word!");
-                // go back to loop and say something about wrong guess
-            }
-        }
-        return correctUserGuess;
+    //    player_lost() print sad message
+    public void playerLost(){
+        System.out.println();
     }
-
-
-
 }
 
 
