@@ -27,8 +27,9 @@ public class Wordguess {
 
 //        choose a random word from a list
         String secretWord = generateRandomWord(wordArray);
-        String[] guesses = new String[secretWord.length()];
-        Arrays.fill(guesses, '_');
+        StringBuilder guesses = new StringBuilder(secretWord.length());
+        guesses.append("_".repeat(secretWord.length()));
+
 
 //        while (you want to play) { //outer loop
         while(true){
@@ -44,8 +45,9 @@ public class Wordguess {
                 char guess = getNextGuess();
 //            check the letter against the word
                 if(secretWord.contains(guess+"")){
+
                     int index = secretWord.indexOf(guess);
-                    guesses
+                    guesses.setCharAt(index, guess);
                     System.out.println("Letter is in the word");
                 };
 //            using the two character arrays discussed above
@@ -100,7 +102,7 @@ public class Wordguess {
     }
 
     //    print_current_state() uses printArray to show player where they are at
-    public void printCurrentState(String[] guesses){
+    public void printCurrentState(StringBuilder guesses){
         System.out.println(guesses.toString());
     }
     //    process() loops thru the word array, looking for the inputed guess, and replaces the "_" with the guesses char if found
