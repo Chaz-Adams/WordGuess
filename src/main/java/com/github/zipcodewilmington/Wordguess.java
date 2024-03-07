@@ -15,7 +15,6 @@ public class Wordguess {
     public static void main(String[] args){
         Wordguess game = new Wordguess();
         game.runGame();
-
     }
 
     public Wordguess() {} // Default Constructor
@@ -23,47 +22,42 @@ public class Wordguess {
     private void runGame() {
         String[] wordArray = {"cat","dog","horse","monkey","cow"};
 
-        Boolean wordGuessed = false;
-
-//        choose a random word from a list
         String secretWord = generateRandomWord(wordArray);
         StringBuilder guesses = new StringBuilder(secretWord.length());
+
         guesses.append("_".repeat(secretWord.length()));
+        int numberOfAllowedGuesses = secretWord.length();
 
-
-//        while (you want to play) { //outer loop
-        while(true){
-//            start the game
+        while(numberOfAllowedGuesses > 0){
             announceGame();
-//            set word guessed to false
-            isWordGuessed(wordGuessed);
-//            while (the word isn't guessed) { //inner loop
-            while (true){
-//            print the current game state
-                printCurrentState(guesses);
-//            ask for a guess (a single letter)
-                char guess = getNextGuess();
-//            check the letter against the word
-                if(secretWord.contains(guess+"")){
+            printCurrentState(guesses);
 
-                    int index = secretWord.indexOf(guess);
-                    guesses.setCharAt(index, guess);
-                    System.out.println("Letter is in the word");
-                };
-//            using the two character arrays discussed above
-//            increment the number of guesses
-//
-//            if the word is guessed
-//            player won, congrats
-//
-//            if too many guesses
-//            player lost, too bad, quit game
+            char guess = getNextGuess();
+
+            if(secretWord.contains((String.valueOf(guess)))){
+                int index = secretWord.indexOf(guess);
+                guesses.setCharAt(index, guess);
+            }
+
+            numberOfAllowedGuesses--;
+            System.out.println("Number of guesses left: "+numberOfAllowedGuesses);
+
+            if(secretWord.equals(guesses.toString())){
+                playerWon();
+                if(!askToPlayAgain()){
+                    break;
+                }
+            }
+
+            if (numberOfAllowedGuesses <= 0){
+                playerLost();
+                if(!askToPlayAgain()){
+                    break;
+                }
+            }
         }
-//        ask if player wants to play again
-      }
-//    display game over
-
-    }
+        gameOver();
+    } //Run game
 
 
     //    announce_game() prints a welcome
@@ -76,9 +70,6 @@ public class Wordguess {
         System.out.println("Game Over!");
     }
 
-    //    initialize_game_state() sets up char[] for secret word and guesses
-    public void initializeGameState(){}
-
     //    get_next_guess() returns a char from player input
     public char getNextGuess(){
         System.out.println("Enter a letter: ");
@@ -86,17 +77,11 @@ public class Wordguess {
         return guess;
     }
 
-    //    is_word_guessed() returns boolean
-    public boolean isWordGuessed(boolean input){
-        boolean wordGuessed = input;
-        return wordGuessed;
-    }
-
     //    ask_to_play_again() returns boolean
     public boolean askToPlayAgain(){
         System.out.println("Would you like to play again?\t(yes / no)");
         String userInput = scanner.nextLine();
-        if(userInput == "yes"){
+        if(userInput.equals("yes")){
             return true;
         }else return false;
     }
@@ -105,16 +90,15 @@ public class Wordguess {
     public void printCurrentState(StringBuilder guesses){
         System.out.println(guesses.toString());
     }
-    //    process() loops thru the word array, looking for the inputed guess, and replaces the "_" with the guesses char if found
 
     //    player_won() prints happy message
     public void playerWon(){
-        System.out.println();
+        System.out.println("You won!");
     }
 
     //    player_lost() print sad message
     public void playerLost(){
-        System.out.println();
+        System.out.println("You lost!");
     }
 
     public String generateRandomWord(String[] words){
