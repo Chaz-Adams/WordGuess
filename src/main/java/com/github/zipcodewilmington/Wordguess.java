@@ -20,45 +20,53 @@ public class Wordguess {
     public Wordguess() {} // Default Constructor
 
     private void runGame() {
-        String[] wordArray = {"cat","dog","horse","monkey","cow"};
+        String[] wordArray = {"cat", "dog", "horse", "monkey", "cow"};
 
-        String secretWord = generateRandomWord(wordArray);
-        StringBuilder guesses = new StringBuilder(secretWord.length());
+            String secretWord = generateRandomWord(wordArray);
+            StringBuilder guesses = new StringBuilder(secretWord.length());
 
-        guesses.append("_".repeat(secretWord.length()));
-        int numberOfAllowedGuesses = secretWord.length();
+            guesses.append("_".repeat(secretWord.length()));
+            int numberOfAllowedGuesses = secretWord.length();
 
-        while(numberOfAllowedGuesses > 0){
-            announceGame();
-            printCurrentState(guesses);
+            while (numberOfAllowedGuesses > 0) {
+                announceGame();
+                printCurrentState(guesses);
 
-            char guess = getNextGuess();
+                char guess = getNextGuess();
 
-            if(secretWord.contains((String.valueOf(guess)))){
-                int index = secretWord.indexOf(guess);
-                guesses.setCharAt(index, guess);
-            }
+                if (secretWord.contains((String.valueOf(guess)))) {
+                    int index = secretWord.indexOf(guess);
+                    guesses.setCharAt(index, guess);
+                }
 
-            numberOfAllowedGuesses--;
-            System.out.println("Number of guesses left: "+numberOfAllowedGuesses);
+                numberOfAllowedGuesses--;
+                System.out.println("Number of guesses left: " + numberOfAllowedGuesses);
 
-            if(secretWord.equals(guesses.toString())){
-                playerWon();
-                if(!askToPlayAgain()){
-                    break;
+                if (secretWord.equals(guesses.toString())) {
+                    playerWon();
+                    if (!askToPlayAgain()) {
+                        break;
+                    } else {
+                        secretWord = generateRandomWord(wordArray);
+                        numberOfAllowedGuesses = secretWord.length();
+                        guesses = new StringBuilder(secretWord.length());
+                        guesses.append("_".repeat(secretWord.length()));
+                    }
+                }
+
+                if (numberOfAllowedGuesses <= 0) {
+                    playerLost();
+                    if (!askToPlayAgain()) {
+                        break;
+                    } else {
+                        secretWord = generateRandomWord(wordArray);
+                        numberOfAllowedGuesses = secretWord.length();
+                        guesses = new StringBuilder(secretWord.length());
+                        guesses.append("_".repeat(secretWord.length()));
+                    }
                 }
             }
-
-            if (numberOfAllowedGuesses <= 0){
-                playerLost();
-                if(!askToPlayAgain()){
-                    break;
-                }
-            }
-        }
-        gameOver();
-    } //Run game
-
+    }
 
     //    announce_game() prints a welcome
     public void announceGame(){
@@ -79,8 +87,9 @@ public class Wordguess {
 
     //    ask_to_play_again() returns boolean
     public boolean askToPlayAgain(){
+        Scanner scanner1 = new Scanner(System.in);
         System.out.println("Would you like to play again?\t(yes / no)");
-        String userInput = scanner.nextLine();
+        String userInput = scanner1.nextLine();
         if(userInput.equals("yes")){
             return true;
         }else return false;
